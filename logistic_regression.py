@@ -45,6 +45,18 @@ def adam(x, y, alpha, num_iterations, beta1, beta2, epsilon):
     return weights
 
 
+def sgd(x, y, alpha, num_iterations):
+    m, n = x.shape
+    weights = np.zeros((n, 1))
+    for i in range(num_iterations):
+        for j in range(m):
+            h = model(x[j, :], weights)
+            error = h - y[j]
+            gradient = x[j, :].reshape(-1, 1) * error
+            weights -= alpha * gradient
+    return weights
+
+
 def predict(x,  weights):
     y_hat = model(x, weights)
     y_hard = (y_hat > 0.5) * 1

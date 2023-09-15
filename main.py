@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from preprocessing import set_missing_ages, set_cabin_type, one_hot_encoder, standard_scaler
-from logistic_regression import logistic_regression, predict, adam
+from logistic_regression import logistic_regression, predict, adam, sgd
 
 if __name__ == '__main__':
     data_train = pd.read_csv('./titanic/train.csv')
@@ -15,8 +15,9 @@ if __name__ == '__main__':
     train_np = train_df.values
     x = train_np[:, 1:]
     y = train_np[:, 0]
-    weights = adam(x, y, 0.01, 10000, 0.9, 0.999, 1e-8)
+    # weights = adam(x, y, 0.01, 10000, 0.9, 0.999, 1e-8)
     # weights = logistic_regression(x, y, 0.01, 10000)
+    weights = sgd(x, y, 0.01, 10000)
     data_test = pd.read_csv('./titanic/test.csv')
     data_test.loc[(data_test.Fare.isnull()), 'Fare'] = 0
     tmp_df = data_test[['Age', 'Fare', 'Parch', 'SibSp', 'Pclass']]
