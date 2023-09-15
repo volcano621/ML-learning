@@ -102,6 +102,18 @@ def adadelta(x, y, num_iterations, beta, epsilon):
     return weights
 
 
+def newton(x, y, num_iterations):
+    m, n = x.shape
+    weights = np.zeros((n, 1))
+    for i in range(num_iterations):
+        h = model(x, weights)
+        error = h - y.reshape(-1, 1)
+        gradient = np.dot(x.T, error) / m
+        hessian = np.dot(x.T, x) / m
+        weights -= np.dot(np.linalg.inv(hessian), gradient)  # 求逆
+    return weights
+
+
 def predict(x,  weights):
     y_hat = model(x, weights)
     y_hard = (y_hat > 0.5) * 1
