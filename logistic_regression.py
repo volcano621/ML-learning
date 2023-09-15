@@ -85,6 +85,23 @@ def rmsprop(x, y, alpha, num_iterations, beta, epsilon):
     return weights
 
 
+def adadelta(x, y, num_iterations, beta, epsilon):
+    m, n = x.shape
+    weights = np.zeros((n, 1))
+    cache = np.zeros((n, 1))
+    delta = np.zeros((n, 1))
+    for i in range(num_iterations):
+        for j in range(m):
+            h = model(x[j, :], weights)
+            error = h - y[j]
+            gradient = x[j, :].reshape(-1, 1) * error
+            cache = beta * cache + (1 - beta) * np.power(gradient, 2)
+            delta_weights = -np.sqrt(delta + epsilon) / np.sqrt(cache + epsilon) * gradient
+            delta = beta * delta + (1 - beta) * np.power(delta_weights, 2)
+            weights += delta_weights
+    return weights
+
+
 def predict(x,  weights):
     y_hat = model(x, weights)
     y_hard = (y_hat > 0.5) * 1
