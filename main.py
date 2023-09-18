@@ -6,7 +6,7 @@ from kmeans import KMeans
 if __name__ == "__main__":
     df = pd.read_csv("./dataset/Iris.csv")
     df.drop("Id", axis=1, inplace=True)
-    x = df.iloc[:, :-1].values
+    x = df.iloc[:, :-1].values  # :-1 means all columns except the last one
     y = df.iloc[:, -1].values  # -1 means the last column
 
     kmeans = KMeans(3)

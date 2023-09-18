@@ -4,10 +4,23 @@ import numpy as np
 class KMeans:
     def __init__(self, K):
         self.K = K
-        self.centroids = None
+        self.centroids = []
 
-    def initialize_centroids(self, x):
-        self.centroids = x[np.random.choice(x.shape[0], self.K, replace=False)]
+    def traditional_k_means(self, X):
+        self.centroids = X[np.random.choice(X.shape[0], self.K, replace=False)]
+
+    def k_means_plusplus(self, X):
+        self.centroids.append(X[np.random.choice(X.shape[0])])
+
+        for _ in range(1, self.K):
+            distances = np.array([min(np.linalg.norm(x - c) ** 2 for c in self.centroids) for x in X])
+            probabilities = distances / distances.sum()
+            next_centroid_index = np.random.choice(X.shape[0], p=probabilities)
+            self.centroids.append(X[next_centroid_index])
+
+    def initialize_centroids(self, X):
+        # self.traditional_k_means(X)
+        self.k_means_plusplus(X)
 
     def assign_points_centroids(self, X):
         X = np.expand_dims(X, axis=1)  # 增加一个维度，与centroids维度一致
