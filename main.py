@@ -4,7 +4,7 @@ from preprocessing import set_missing_ages, set_cabin_type, one_hot_encoder, sta
 from logistic_regression import logistic_regression, predict, adam, sgd, adagrad, rmsprop, adadelta, newton
 
 if __name__ == '__main__':
-    data_train = pd.read_csv('./titanic/train.csv')
+    data_train = pd.read_csv('titanic/train.csv')
 
     set_cabin_type(data_train)
     rfr = set_missing_ages(data_train)
@@ -22,7 +22,7 @@ if __name__ == '__main__':
     # weights = rmsprop(x, y, 0.01, 10000, 0.9, 1e-8)
     # weights = adadelta(x, y,  10000, 0.9, 1e-8)
     weights = newton(x, y, 10000)
-    data_test = pd.read_csv('./titanic/test.csv')
+    data_test = pd.read_csv('titanic/test.csv')
     data_test.loc[(data_test.Fare.isnull()), 'Fare'] = 0
     tmp_df = data_test[['Age', 'Fare', 'Parch', 'SibSp', 'Pclass']]
     null_age = tmp_df[data_test.Age.isnull()].values
