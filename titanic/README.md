@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 逻辑回归 Logistic Regression
 
 机器学习中用于解决二分问题的算法。
@@ -6,7 +7,7 @@
 
 Kaggle中的Titanic数据集中，我们要实现根据Pclass、Age等属性来判断Survived是1还是0。先用训练集得到各属性和Survived之间的相关性（即weights），再用weights去predict测试集中每个人是否Survived
 
-[img](./image-20230919183711161.png)
+[img](image-20230919183711161.png)
 
 前置知识：学习率
 
@@ -199,3 +200,6 @@ $$
    \theta_{t+1} = \theta_t - \alpha \frac{m_t}{\sqrt{v_t} + \epsilon}
    $$
    ε=10^-8，避免除数变为0。
+=======
+# Iris
+>>>>>>> dev
